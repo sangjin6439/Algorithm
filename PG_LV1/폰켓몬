@@ -1,0 +1,30 @@
+중복이 핵심이기 때문에 HashSet을 사용해서 중복을 검사했다.
+30분
+
+``` 
+import java.util.*;
+class Solution {
+        public int solution(int[] nums) {
+            
+            Set<Integer> a = new HashSet<>();
+
+            int answer = 0; 
+            
+            int b = nums.length;
+
+            for(int i : nums){
+                a.add(i);
+            }
+            // 중복 된게 b>2보다 크면 b/2리턴, 작으면 a.size리턴
+            if(a.size()>=b/2){
+                answer= b/2;
+            }else{
+                answer= a.size();
+            }
+            return answer;
+        }
+    }
+```
+
+중복되는 값이 배열/2보다 작으면 set의 값 출력
+배열이 더 크거나 같으면 배열/2 출력
