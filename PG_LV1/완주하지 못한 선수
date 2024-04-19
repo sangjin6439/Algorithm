@@ -1,0 +1,59 @@
+HashMap을 이용해 participant를 넣은 다음 completion도 넣어서 key값이 중복되면 1씩 value를 늘리려 헀는데 
+completion을 key값으로 넣고 중복되는 participant에 중복된 key값이 없으면 출력하면 될거라 생각해서 코드를 짰다.
+
+import java.util.*;
+
+class Solution {
+```
+    public String solution(String[] participant, String[] completion) {
+        //배열 for문 말고 그냥 HashMap을 이용해서 만약 중복되면 2를 넣게하는데 2가 아닌 값 뽑으면 될듯
+        HashMap<String,Integer> hm = new HashMap<>();
+        String answer = "";
+        for(String a: completion){
+            hm.put(a,1);
+        }
+        for(String b: participant){
+            if(!hm.containsKey(b)){
+                answer= b;
+            }
+        }
+        return answer;
+    }
+}
+```
+근데 문제가 생겼다! 이름이 중복될 수 있는 사실이 었다. 
+
+초기에 생각했던 HashMap을 이용해 participant를 넣은 다음 completion도 넣어서 key값이 중복되면 1씩 value를 늘리려 헀는데  이 방식을 시용했다.
+
+
+import java.util.*;
+
+class Solution {
+
+    public String solution(String[] participant, String[] completion) {
+        //hashMap에 넣고 중복되면 1을 증가시키도록 하고 completion과 일치하는 키 있으면 여기서 1씩 차감 시키도록 함, 값이 1이상이면 정답이 됨
+        HashMap<String,Integer> hm = new HashMap<>();
+        String answer = "";
+        
+        for(String a: participant){
+            if(hm.containsKey(a)){
+                hm.put(a,hm.get(a)+1);
+            }else{
+                hm.put(a,1);
+            }       
+        }
+        
+        //존재하면 1감소
+        for(String b: completion){
+                hm.put(b,hm.get(b)-1);
+        }
+         for(String c: participant){
+                if(hm.get(c)!=0){
+                    answer=c;
+                    break;
+                }
+        }
+        return answer;
+    }
+}
+이런식으로 문제를 풀었다.
