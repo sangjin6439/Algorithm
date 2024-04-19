@@ -12,6 +12,7 @@ class Solution {
         for(String a: completion){
             hm.put(a,1);
         }
+   
         for(String b: participant){
             if(!hm.containsKey(b)){
                 answer= b;
@@ -47,6 +48,7 @@ class Solution {
         for(String b: completion){
                 hm.put(b,hm.get(b)-1);
         }
+         //hm.keySet()으로 for-each돌려도 됨 
          for(String c: participant){
                 if(hm.get(c)!=0){
                     answer=c;
