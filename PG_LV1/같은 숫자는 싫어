@@ -1,0 +1,23 @@
+stack말고 리스트나 여러 컬랙션을 사용해서 모두 구현가능하다. 컬랙션->배열 전환이 스트림을 사용하여서 어려웠다.
+
+중복제거를 위해 HashSet을 생각했지만 110011 이런 수가 나오면 뒤의 11도 삭제되어 Set을 사용하지 않았다.
+
+import java.util.*;
+
+public class Solution {
+    public int[] solution(int []arr) {
+       //스택 쓰면 됨
+        Stack<Integer> num = new Stack<Integer>();
+        num.push(arr[0]);
+        for(int i =1; i<arr.length;i++){
+            if(num.peek()==arr[i]){
+                
+            }else {
+                num.push(arr[i]);
+            }
+        }
+        return num.stream().mapToInt(i->i).toArray();
+    }
+}
+
+object스트림을 int로 매핑해주고 배열로 만들어줬다.
