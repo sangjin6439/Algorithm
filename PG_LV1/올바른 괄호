@@ -1,0 +1,30 @@
+()쌍이 맞으면 true출력 -> 전형적인 스택 문제이다.
+스택말고 더 쉽게 count로 풀어보았다.
+  
+```
+import java.util.*;
+
+class Solution {
+    boolean solution(String s) {
+        boolean answer = true;
+        int count =0;
+        for(int i =0; i<s.length(); i++){
+            
+            if(s.charAt(i)=='('){
+                count++;
+            }else {
+                if(count>0&&s.charAt(i)==')'){
+                    count--;
+                }else{
+                    answer=false;
+                    break;
+                }
+            }
+        }
+        if(count!=0){
+            answer=false;
+        }
+        return answer;
+    }
+}
+```
