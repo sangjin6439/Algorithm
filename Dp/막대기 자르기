@@ -1,0 +1,29 @@
+문제: 일단 막대기부터 잘라봅시다. 하나의 긴 막대기가 있는데 막대기 조각마다 가격이 다릅니다. 막대기를 적절하게 잘라서 가장 가격이 높게 만들어야 합니다.
+
+길이(i) 0 1 2 3 4 5 6 7 8 9 10
+가격(Pi) 0 1 5 8 9 10 17 17 20 24 30
+예를 들면 길이가 4인 막대기를 자를 때 얻을 수 있는 최대 가격은, 길이를 2인 막대기 두 개로 나누어서 가격을 5 + 5 = 10으로 만드는 겁니다. 길이가 6인 막대는 자르지 않고 그냥 팔았을 때 최대 17의 가격을 얻을 수 있습니다.
+
+
+```
+import java.util.*;
+
+class Solution {
+    public int[] solution(int length, int[] price) {
+        int[] arr = new int[length+1];
+
+        arr[0] = 0;
+
+        for(int i = 1; i <= length; i++) {
+            int maxVal = Integer.MIN_VALUE;
+            for(int j = 1; j <= i; j++) {
+                maxVal = Math.max(maxVal, price[j-1] + arr[i-j]);
+            }
+            arr[i] = maxVal;
+        }
+
+        return arr;
+    }
+
+}
+```
