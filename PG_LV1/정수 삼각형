@@ -1,0 +1,18 @@
+이 문제는 LV3인데 그렇게 어렵지는 않았다. 물론 처음에는 못풀었다. DP문제는 대부분 Math.max를 사용하는거 같다. 
+아래에서 부터 계산하는 bottom-up방식을 사용하여 풀었다.
+
+``` 
+  class Solution {
+    public int solution(int[][] triangle) {
+        
+       //바닥부터 시작해서 올라가는 형식으로 하면 쉬울듯
+        for(int i =triangle.length-1; i>0; i--){
+           for(int j =0; j<triangle[i-1].length;j++){
+               triangle[i-1][j]+=Math.max(triangle[i][j],triangle[i][j+1]);
+           }
+        }
+       
+        return triangle[0][0];
+    }
+  }
+```
