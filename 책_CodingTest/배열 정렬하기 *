@@ -9,11 +9,14 @@ public class CodingTest {
 
         Arrays.sort(arr);
         for(int i =0; i<arr.length;i++){
-            System.out.println(arr[i]);
+            System.out.print(arr[i]);
         }
 
     }
 }
 ```
 
-정답 풀이도 같았다.
+배열의 부분 인덱스의 값들을 하나 씩 꺼낼 때 System.out.println(Arrays.toString(arr));을 하면 하나씩 꺼내진다.
+위의 for문과 결과 값이 다르다
+for문 : -5 1 2 3 4
+Arrays.toString(arr) : [-5, 1, 2, 3, 4]
