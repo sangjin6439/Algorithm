@@ -1,0 +1,49 @@
+권장 풀이시간 30분 : 풀이시간 20분이내
+주어진 배열을 서로다른 인덱스 2개를 뽑아 더해 만든 배열을 오름차순으로 담아 반환 
+배열 [5, 0, 2, 7]이 주어진다면 [2, 5, 7, 9, 12]를 출력시킴
+
+아래의 코드를 보면 리스트로 만들고 contains메서드로 중복을 체크하고 중복되지 않으면 추가시킴;
+'''
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] arr) {
+
+        List<Integer> list = new ArrayList<>();
+
+        for(int i =0; i<arr.length-1; i++){
+            for(int j =i+1; j<arr.length;j++){
+                if(!list.contains(arr[i]+arr[j])){
+                    list.add(arr[i]+arr[j]);
+                }
+            }
+        }
+
+        Collections.sort(list);
+        return list.stream().mapToInt(i->i).toArray();
+
+    }
+}
+'''
+
+문제지 답안은 hashSet을 이용해서 중복을 제거했음. @@set컬랙션도 toArray로 배열 생성가능함.
+
+'''
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] arr) {
+
+        HashSet<Integer> set = new HashSet<>();
+
+        for(int i =0; i<arr.length-1; i++){
+            for(int j =i+1; j<arr.length;j++){
+                set.add(arr[i]+arr[j]);
+            }
+        }
+        
+        return set.stream().sorted().mapToInt(i->i).toArray();
+
+    }
+}
+'''
