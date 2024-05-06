@@ -26,7 +26,7 @@ class Solution {
 }
 '''
 
-문제지 답안은 hashSet을 이용해서 중복을 제거했음. @@set컬랙션도 toArray로 배열 생성가능함.
+문제지 답안은 hashSet을 이용해서 중복을 제거했음. set컬랙션도 toArray로 배열 생성가능함.
 
 '''
 import java.util.*;
