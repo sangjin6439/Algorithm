@@ -1,4 +1,4 @@
-추천시간 30분 : 푼 시간 20분 -> 혼자서는 못풀었음 
+추천시간 30분 : 푼 시간 20분 -> 혼자서는 못풀었음. 연속된 배열을 어떻게 정답이랑 매칭할지 몰랐다. 
 
 '''
 import java.util.*;
@@ -26,7 +26,7 @@ class Solution {
             if(max == score[i])
                 list.add(i+1);
         }
-        
+        //이부분을 for문으로 list의 값을 하나씩 넣어줘도 되고 아래처럼 스트림으로 변경해줘도 된다. 
             int[] answer = list.stream().mapToInt(Integer::intValue).toArray();
         
    
