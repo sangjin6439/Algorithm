@@ -28,6 +28,7 @@ class Solution {
         }
         //이부분을 for문으로 list의 값을 하나씩 넣어줘도 되고 아래처럼 스트림으로 변경해줘도 된다. 
             int[] answer = list.stream().mapToInt(Integer::intValue).toArray();
+        //int[] answer = list.stream().mapToInt(i->i).toArray();    이것도 같은 식임
         
    
         return answer;
