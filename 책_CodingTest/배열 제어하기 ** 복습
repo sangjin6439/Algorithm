@@ -31,6 +31,8 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] arr) {
 
+//이렇게 안하고 Integer[] result = Arrays.stream(arr).boxed().distinct().sorted(Comparator.reverseOrder()).toArray(Integer[]::new);이렇게 한 줄로 가능
+
         Integer[] result = Arrays.stream(arr).boxed().distinct().toArray(Integer[]::new);
         Arrays.sort(result, Collections.reverseOrder());
 
