@@ -1,0 +1,62 @@
+문제 : : 주어진 계단은 한 번에 한 계단씩 또는 두 계단씩 오를 수 있지만, 연속된 세 개의 계단을 모두 밟아서는 안 된다.
+
+       계단의 개수와 각 계단마다 얻을 수 있는 점수가 주어질 때,
+
+       마지막 계단까지 오르되 최대 점수를 얻으려면 어떤 계단을 밟아야 하는가?
+
+
+
+- 입력: 계단 개수(n), n개의 계단 점수
+
+- 출력: 최대 점수
+
+- 실행 예:
+10                                      // 계단 수
+
+1 2 4 8 16 1 3 5 7 9              // 계단별 점수
+
+46 // 최대 값
+
+푼 시간 : 30분
+
+Dp문제는 Math.max를 대부분 사용하는 것같다. 연속된 세 개의 계단을 모두 밟아서는 안 된다라는 조건을 잘 지키면서 점화식을 구했으면 쉽게 풀었을 것이다.
+
+'''
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("hw9_1:인상진");
+
+        //계단 수
+        int stairCount = sc.nextInt();
+
+        int maxScore = 0;
+        //계단 점수
+        int[] stairScore = new int[stairCount];
+        //dp 점수
+        int[] dpScore = new int[stairCount];
+
+        for (int i = 0; i < stairCount; i++) {
+            stairScore[i] = sc.nextInt();
+        }
+        // 0~2칸까지의 점화식
+        dpScore[0] = stairScore[0];
+        dpScore[1] = stairScore[0]+stairScore[1];
+        dpScore[2] = Math.max(stairScore[0]+stairScore[2],stairScore[1]+stairScore[2]);
+
+        for (int i = 3; i<stairCount; i++ ){
+            // i-2 번째 계단에서 i 번째 계단으로 점프하는 경우
+            // i-3 번째 계단을 밟고 i-1 번째 계단을 밟은 후 i 번째 계단으로 점프하는 경우 중 최대값 선택
+            dpScore[i]= Math.max(dpScore[i-2]+stairScore[i],dpScore[i-3]+stairScore[i-1]+stairScore[i]);
+        }
+
+        System.out.println(dpScore[stairCount-1]);
+    }
+}
+
+'''
