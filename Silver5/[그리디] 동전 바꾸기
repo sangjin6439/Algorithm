@@ -1,0 +1,99 @@
+  (1) 동전 액면 갯수(n), n개의 동전 액면을 입력받음
+
+  (2) 동전 액면을 정렬
+
+  (3) 동전 액면이 모두 바로 아래 액면의 배수인지 검사
+
+      (a) 검사 결과 배수가 아니면 실패
+
+      (b) 검사 결과 배수이면 거스름돈 액수를 입력받아 최적해를 구함
+
+          (b-1) 최적해를 구하는 과정에서 거스름돈 액수를 맞출 수 없으면 실패
+
+          (b-2) 최적해를 구했으면 동전액면 x 갯수 형식으로 출력하되 액면이 높은 동전부터 차례대로 출력할 것
+
+'''
+import java.util.*;
+
+public class Main_202014039 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("hw11_1:인상진");
+
+        int coinCount = sc.nextInt();
+        //Collections.reverseOrder()를 사용하기 위해 Integer로 선언
+        Integer[] coinPrices = new Integer[coinCount];
+        for (int i = 0; i < coinCount; i++) {
+            coinPrices[i] = sc.nextInt();
+        }
+        //배수 확인용 오름차순
+        Arrays.sort(coinPrices);
+
+        //a 조건에 맞는 메서드 실행
+        if (!a(coinPrices)) {
+            System.out.println("그리디 알고리즘은 최적해를 보장하지 않습니다.");
+            return;
+        }
+        //내림차순으로 출력하기 위해 변경
+        Arrays.sort(coinPrices, Collections.reverseOrder());
+        int change = sc.nextInt();
+
+        //b-1 조건에 맞는 메서드 실행
+        if (!b1(change, coinPrices)) {
+            System.out.println("원하는 거스름돈 액수를 맞출 수 없습니다.");
+            return;
+        }
+        //b-2 조건에 맞는 메서드 실행
+        b2(change, coinPrices);
+
+    }
+
+    //(a) 검사 결과 배수가 아니면 실패
+    private static boolean a(Integer[] coinPrices) {
+        for (int i = 1; i < coinPrices.length; i++) {
+            if (coinPrices[i] % coinPrices[i - 1] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // (b-1) 최적해를 구하는 과정에서 거스름돈 액수를 맞출 수 없으면 실패
+    private static boolean b1(final int change, final Integer[] coinPrices) {
+
+        int result = 0;
+        for (int i = 0; i < coinPrices.length; i++) {
+            result = change % coinPrices[i];
+        }
+        //result가 0이 아니면 거스름돈 액수를 못 맞추는 거
+        if (result != 0) {
+            return false;
+        }
+        return true;
+    }
+
+    // (b-2) 최적해를 구했으면 동전액면 x 갯수 형식으로 출력하되 액면이 높은 동전부터 차례대로 출력할 것
+    private static void b2(final int change, final Integer[] coinPrices) {
+        //몇개를 사용했는 지 알기 위한 리스트
+        List<Integer> count = new ArrayList<>();
+        //어떤 동전이 사용됐는 지 알기 위한 리스트
+        List<Integer> coin = new ArrayList<>();
+
+        int resultPrice = change;
+
+        for (int i = 0; i < coinPrices.length; i++) {
+            int coinCount = resultPrice / coinPrices[i];
+            if (coinCount != 0) {
+                count.add(coinCount);
+                resultPrice = resultPrice % coinPrices[i];
+                coin.add(coinPrices[i]);
+            }
+        }
+
+        for (int i = 0; i < count.size(); i++) {
+            System.out.println(coin.get(i) + " X " + count.get(i));
+        }
+    }
+}
+'''
+오름 차순을 도와주는 Collections.reverseOrder 클래스가 기억이 안나서 고생했다. 
