@@ -1,0 +1,27 @@
+import java.util.*;
+
+class Solution {
+    public int solution(String[][] clothes) {
+        int answer = 1;
+        // 풀이 핵심 -> 옷의 종류별로 map에 넣고 하나씩 경우의 수를 구하기
+        HashMap<String, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < clothes.length; i++) {
+            map.put(clothes[i][1],map.getOrDefault(clothes[i][1], 0)+1);
+        }
+
+        //옷이 하나라면 그냥 보내기 -> 처음에 이런식으러 if-else를 사용했는데 어차피 for-each를 돌리면 돼서 주석처리 했음
+        // if(map.size()==1){
+        //     answer=map.get(clothes[0][1]);
+        // }
+        
+        //종류가 2개 이상이면 같은 종류를 제외한 나머지를 하나씩 answer에 넣고 하나씩 중복이 되지 않게 하려는데 시간이 오래 걸림
+        // 옷의 종류가 선글라스 2개 바지 1개라고 치면 경우의 수가 5개가 된다. 여기서 입지 않는 경우를 추가해 (cnt+1) 선글라스 3개
+        // 바지 2개라고 생각하고 answer에 곱하기
+        for(int cnt:map.values()){
+            answer *=(cnt+1);
+        }
+    //answer-1을 하는 이유는 모든 의류를 입지 않는 경우를 뺴기 위해서
+        return answer-1;
+    }
+}
