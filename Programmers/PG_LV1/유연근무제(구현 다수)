@@ -1,0 +1,100 @@
+// 정확도 35 ->반례가 있음
+시간에 관련된 문제는 항상 분이 시가 되는 것을 조심해야함! 60m == 1h 그러니 10분을 더한 schedules의 분이 60을 넘어가는 지 확인해야함
+초기 코드는 map을 사용했지만 for문 마다 cnt변수를 사용하여 answer의 값을 올리는 식이 더 편리함.
+
+class Solution {
+    public int solution(int[] schedules, int[][] timelogs, int startday) {
+    
+        int answer = 0;
+        //직원 수
+        int n= schedules.length;
+        //사람의 수 만큼 for문을 돌기
+        for(int i=0; i<n; i++){
+            int cnt=0;
+            //일주일 만큼 돌리기 위한 p -> for문으로 처리해도 좋을 듯
+                int p=0;
+            // 토요일과 일요일을 찾아 카운트하지 않기 위해 사용
+                int j=startday;
+            //일주일을 기준으로 잡기
+                while(p<7){
+               
+                if(j>7){
+                    j=j%7;
+                }
+                //6 7은 토 욜이라 스킵
+                if(j==6 || j==7) {
+                    p++;
+                    j++;
+                    continue;
+                }
+                if(validTime(schedules[i],timelogs[i][p])){
+                    cnt++;
+                }
+                    p++;
+                    j++;
+        }
+            if(cnt==5) answer++;
+    }
+        return answer;
+    }
+
+//분이 60을 넘어가면 1시간으로 변경 후 60m 빼기
+    boolean validTime(int sc, int time){
+        int okTime;
+        int h=sc/100;
+        int m=sc%100;
+        
+        if(m+10>=60){
+            okTime= ((m+10)-60)+((h+1))*100;
+        }else okTime=sc+10;
+        
+        if(time<=okTime){
+            return true;
+        }else return false;
+    }
+}
+
+//초기에 map사용 및 반례 못 찾은 코드
+import java.util.*;
+
+class Solution {
+    public int solution(int[] schedules, int[][] timelogs, int startday) {
+        //
+        int answer = 0;
+        //직원 수
+        int n= schedules.length;
+        
+        HashMap<Integer,Integer> mp =new HashMap<>();
+        
+        //사람의 수 만큼 for문을 돌기
+        for(int i=0; i<n; i++){
+            //스케쥴만큼 돌리기 하루 씩
+                int p=0;
+            //5
+                int j=startday;
+                while(p<7){
+               
+                if(j>7){
+                    j=j%7;
+                }
+                
+                if(j==6 || j==7) {
+                    p++;
+                    j++;
+                    continue;
+                }
+                if(timelogs[i][p]<=schedules[i]+10){
+                    mp.put(i,mp.getOrDefault(i,0)+1);
+                }
+                    p++;
+                    j++;
+        }
+    }
+        for(Integer x: mp.keySet()){
+            if(mp.get(x)==5){
+                answer++;
+            };
+        }
+        return answer;
+    }
+}
