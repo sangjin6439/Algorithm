@@ -1,0 +1,77 @@
+소요시간 1시간15분
+몰랐던 부분 : String.split() , String.foramat(), String -> Int형 변환
+
+class Solution {
+        public String solution(String video_len, String pos, String op_start, String op_end, String[] commands) {
+            //문제 조건 10초 전 이동, 10초 후 이동, 오프닝 건너 뛰기
+            for (String x : commands) {
+                pos = changeTime(pos, x, video_len, op_start, op_end);
+            }
+            return pos;
+        }
+
+        String changeTime(String pos, String com, String video_len, String op_start, String op_end) {
+            //비디오 총 시간
+            String[] lenIntArr = video_len.split(":");
+            int lh = Integer.valueOf(lenIntArr[0]);
+            int lm = Integer.valueOf(lenIntArr[1]);
+            int lenNum = lh * 100 + lm;
+            //오프닝 시작 시간
+            String[] startIntArr = op_start.split(":");
+            int sh = Integer.valueOf(startIntArr[0]);
+            int sm = Integer.valueOf(startIntArr[1]);
+            int startNum = sh * 100 + sm;
+            //오프닝 종료 시간
+            String[] endIntArr = op_end.split(":");
+            int eh = Integer.valueOf(endIntArr[0]);
+            int em = Integer.valueOf(endIntArr[1]);
+            int endNum = eh * 100 + em;
+            // command에 따른 현재 시간
+
+
+            pos = time(pos, com,startNum,endNum);
+            System.out.println("pos값 change되고 "+ pos);
+            String[] posIntArr = pos.split(":");
+            int h = Integer.valueOf(posIntArr[0]);
+            int m = Integer.valueOf(posIntArr[1]);
+            int posNum = h * 100 + m;
+
+            //시간이 0보다 작을 시 
+            if (posNum < 0) {
+                return String.format("%02d:%02d", 0, 0);
+            //pos가 오프닝 중일 때 오프닝 끝으로 시간 변경
+            } else if (startNum <= posNum && posNum <= endNum) {
+                return String.format("%02d:%02d",eh,em);
+            //pos가 비디오 종료시간 보다 클 때
+            }else if(posNum>lenNum){
+                return String.format("%02d:%02d",lh,lm);
+            } else return String.format("%02d:%02d",h,m);
+        }
+
+        String time(String pos, String com,int startNum,int endNum) {
+
+            //이 부분이 문제였음 변환과정 -> split으로 :을 기준으로 문자열 배열로 변경
+            String[] posIntArr = pos.split(":");
+            int h = Integer.valueOf(posIntArr[0]);
+            int m = Integer.valueOf(posIntArr[1]);
+            int posNum= h * 100 + m;
+            if (startNum <= posNum && posNum <= endNum) {
+                h=endNum/100;
+                m=endNum%100;
+            }
+            if (com.equals("next")) {
+                m+=10;
+                if (m >= 60) {
+                    m -= 60;
+                    h += 1;
+                }
+            } else {
+                m-=10;
+                if (m < 0) {
+                    h -= 1;
+                    m += 60;
+                }
+            }
+            return String.format("%02d:%02d",h,m);
+        }
+    }
