@@ -1,0 +1,65 @@
+주석 처리된 부분의 풀이가 처음의 풀이였고 가장 긴 부분을 먼저 접는다는 조건을 만족시키지 못했다.
+max와 wMax를 정해서 가장 긴 길이를 각각 구하고 지갑에서 가장 긴 부분이 지폐의 가장 긴 부분보다 크고 지갑의 짦은 부분이 지폐의 짦은 부분보다 크다면 조건이 만족된다. 
+
+class Solution {
+    public int solution(int[] wallet, int[] bill) {
+
+        int answer = 0;
+        while(true){
+            //가장 긴 부분 정하기
+            int max = Math.max(bill[0],bill[1]);
+            int min = Math.min(bill[0],bill[1]);
+            int wMax = Math.max(wallet[0],wallet[1]);
+            int wMin = Math.min(wallet[0],wallet[1]);
+
+            if(wMax>=max && wMin>=min){
+                break;
+            }else {
+                if(max==bill[0]){
+                    bill[0]=bill[0]/2;
+                }else  bill[1]=bill[1]/2;
+            answer++;     
+            }
+
+            // if(wallet[0]>=bill[0]){
+            //     if(wallet[1]>=bill[1]){
+            //         break;
+            //     }else {
+            //         bill[1]=bill[1]/2;
+            //         answer++;
+            //     }
+            // }else if(wallet[1]>=bill[0]){
+            //     if(wallet[0]>=bill[1]){
+            //         break;
+            //     }else {
+            //         bill[1]=bill[1]/2;
+            //         answer++;
+            //     }
+            // }else if(wallet[1]>=bill[1]){
+            //     if(wallet[0]>=bill[0]){
+            //         break;
+            //     }else {
+            //         bill[0]=bill[0]/2;
+            //         answer++;
+            //     }
+            // }else if(wallet[0]>=bill[1]){
+            //     if(wallet[1]>=bill[0]){
+            //         break;
+            //     }else {
+            //         bill[0]=bill[0]/2;
+            //         answer++;
+            //     }
+            // }else {
+            //     if(Math.max(bill[0],bill[1])==bill[0]){
+            //         bill[0]=bill[0]/2;
+            //         answer++;
+            //     }else {
+            //         bill[1]=bill[1]/2;
+            //         answer++;
+            //     }
+            //                     }
+        }
+
+        return answer;
+    }
+}
