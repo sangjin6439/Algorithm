@@ -1,0 +1,43 @@
+40분 소요
+더 간결힌 코드로 변경해 보았다. 
+class Solution {
+    public int solution(int n, int m, int[] section) {
+        한번 덧칠한 걸 default로 잡기
+        int answer = 1;
+        // 맨 처음 섹션을 기준으로
+        int roller=section[0];
+
+        for(int i=1; i<section.length; i++){
+            // roller의 값에 m의 길이를 더하고 배열이니 인덱스 번호에 맞게 -1진행하고 나머지 section을 비교하기
+            if(roller+m-1<section[i]){
+                answer++;
+                // 나머지 section이 더 크다면 answer++하고 roller길이 변경
+                roller=section[i];
+            }
+        }
+        return answer;
+    }
+}
+
+아래의 코드가 처음 작성한 코드이다. p를 이용하여 이미 칠해진 곳을 확인했다.
+class Solution {
+    public int solution(int n, int m, int[] section) {
+        int answer = 0;
+        //덧칠했는지 확인
+        int p=0;
+        for(int i=0; i<section.length; i++){
+            //이미 칠해졌다면 넘기기
+            if(section[i]<=p) continue;
+            //새로 덧칠할 부분의 끝이 덧칠해야할 부분의 끝보다 작을 경우 answer++하고 칠해진 p 증가시키기
+            if(section[i]+m<=section[section.length-1]){
+                p=section[i]+m-1;
+                answer++;
+            }else {
+                answer++;
+                break;
+            }
+        }
+       
+        return answer;
+    }
+}
