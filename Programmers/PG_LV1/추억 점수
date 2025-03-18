@@ -1,0 +1,18 @@
+class Solution {
+    public int[] solution(String[] name, int[] yearning, String[][] photo) {
+        int[] answer = new int[photo.length];
+        for(int i=0; i<photo.length; i++){
+            int cnt=0;
+            for(String x: photo[i]){
+                for(int j=0; j<name.length; j++){
+                    if(x.equals(name[j])){
+                        cnt+=yearning[j];
+                        break;
+                    }
+                }
+            }
+            answer[i]=cnt;
+        }
+        return answer;
+    }
+}
