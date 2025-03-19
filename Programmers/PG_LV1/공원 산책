@@ -1,0 +1,72 @@
+1시간 소요
+완전 빡 구현이였고 동 서 남 북에 대해 각각의 조건들이 다 달라서 코드 실수하면 디버깅 하는데 시간이 오래 걸린다. 
+class Solution {
+        public int[] solution(String[] park, String[] routes) {
+            int[] answer = new int[2];
+
+            String[][] parks = new String[park.length][park[0].length()];
+
+            for (int i = 0; i < parks.length; i++) {
+                for (int j = 0; j < park[0].length(); j++) {
+                    parks[i][j] = String.valueOf(park[i].charAt(j));
+                    if(parks[i][j].equals("S")){
+                        answer[0]=i;
+                        answer[1]=j;
+                    }
+                }
+            }
+            
+            for (int i = 0; i < routes.length; i++) {
+                String[] go = routes[i].split(" ");
+                int move = Integer.parseInt(go[1]);
+                if (go[0].equals("E")) {
+                    if (answer[1]+move < park[0].length() && validRoutes(parks,answer,go[0],move)) {
+                        answer[1] += move;
+                    }
+                }else if (go[0].equals("W")) {
+                    if (answer[1]-move>= 0 && validRoutes(parks,answer,go[0],move)) {
+                        answer[1] -= move;
+                    }
+                }else if (go[0].equals("N")) {
+                    if (answer[0]-move >= 0 && validRoutes(parks,answer,go[0],move)) {
+                        answer[0] -= move;
+                    }
+                }else if (go[0].equals("S")) {
+                    if (answer[0]+move < parks.length && validRoutes(parks,answer,go[0],move)) {
+                        answer[0] += move;
+                    }
+                }
+            }
+
+            return answer;
+        }
+
+        private boolean validRoutes(String[][] parks, int[] answer, String d, int l) {
+        if (d.equals("E")) {
+            for (int i = 1; i <= l; i++) {
+                if (parks[answer[0]][answer[1] + i].equals("X")) {
+                    return false;
+                }
+            }
+        } else if (d.equals("W")) {
+            for (int i = 1; i <= l; i++) {
+                if (parks[answer[0]][answer[1] - i].equals("X")) {
+                    return false;
+                }
+            }
+        } else if (d.equals("N")) {
+            for (int i = 1; i <= l; i++) {
+                if (parks[answer[0] - i][answer[1]].equals("X")) {
+                    return false;
+                }
+            }
+        } else if (d.equals("S")) {
+            for (int i = 1; i <= l; i++) {
+                if (parks[answer[0] + i][answer[1]].equals("X")) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
