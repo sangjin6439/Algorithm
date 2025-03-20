@@ -1,0 +1,35 @@
+20분 소요
+어렵지는 않았고 각 끝 지점에 있는 파일들의 좌표를 구해서 answer에 넣으면 됨
+class Solution {
+    public int[] solution(String[] wallpaper) {
+        
+        //빈파일 . 파일이 있는 칸 #
+        //wallpaper를 이중 배열로 만들어서 -> 처음에 잘못 생각함 (오른쪽의 맨 끝파일을 발견하고 왼쪽의 맨 끝x축을 발견해서 y축을 비교하여 드래기 범위 결정) 
+        char[][] w = new char[wallpaper.length][wallpaper[0].length()];
+        
+        for(int i =0; i<wallpaper.length; i++){
+            for(int j =0; j<wallpaper[i].length(); j++){
+                w[i][j]=wallpaper[i].charAt(j);
+            }
+        }
+        
+        int lux=wallpaper.length;
+        int luy=wallpaper[0].length();
+        int rdx=0;
+        int rdy=0;
+        
+        for(int i =0; i<wallpaper.length; i++){
+            for(int j =0; j<wallpaper[i].length(); j++){
+                if(w[i][j]=='#') {
+                    lux=Math.min(lux,i);     
+                    luy=Math.min(luy,j);
+                    rdx=Math.max(rdx,i);
+                    rdy=Math.max(rdy,j);
+                }
+            }
+        }
+        int[] answer = {lux, luy, rdx+1, rdy+1};
+        
+        return answer;
+    }
+}
