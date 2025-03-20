@@ -1,13 +1,16 @@
 소요 시간 1시간 10분 -> 문제를 똑바로 테스트케이스 못봐서 시간 소요
 요즘은 이런 빡구현 문제들이 많이 나오는 추세다.
 
+* 시간 소요 이유 * 
+split을 사용할 때 특수문자는 \\을 사용해야한다! ex) string.split("\\.");
 단순 코딩에 시간이 많이 들었고 terms의 최대 유효기간이 20이라서 2년까지 돌 수 있다. 이 조건을 확인 못해서 시간을 20분 정도 쓴 거 같다.
 또한 비교할 날짜와 현재 날짜를 비교할 때 년 월 일 을 전부 일로 바꾸어서 비교하면 되는데 각각 년 월 일로 비교하려고 하다보니 여기서도 시간을 많이 사용했다.
 
 import java.util.*;
 class Solution {
     public int[] solution(String today, String[] terms, String[] privacies) {
-        
+
+        //split을 사용할 때 특수문자는 \\을 사용해야한다!
         String[] date = today.split("\\.");
         int y=Integer.parseInt(date[0]);
         int m=Integer.parseInt(date[1]);
