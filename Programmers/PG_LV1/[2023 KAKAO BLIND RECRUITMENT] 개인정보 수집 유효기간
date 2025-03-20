@@ -1,0 +1,64 @@
+소요 시간 1시간 10분 -> 문제를 똑바로 테스트케이스 못봐서 시간 소요
+요즘은 이런 빡구현 문제들이 많이 나오는 추세다.
+
+단순 코딩에 시간이 많이 들었고 terms의 최대 유효기간이 20이라서 2년까지 돌 수 있다. 이 조건을 확인 못해서 시간을 20분 정도 쓴 거 같다.
+또한 비교할 날짜와 현재 날짜를 비교할 때 년 월 일 을 전부 일로 바꾸어서 비교하면 되는데 각각 년 월 일로 비교하려고 하다보니 여기서도 시간을 많이 사용했다.
+
+import java.util.*;
+class Solution {
+    public int[] solution(String today, String[] terms, String[] privacies) {
+        
+        String[] date = today.split("\\.");
+        int y=Integer.parseInt(date[0]);
+        int m=Integer.parseInt(date[1]);
+        int d=Integer.parseInt(date[2]);
+        int totalDay= y*12*28+m*28+d;
+        List<Integer> li = new ArrayList<>();
+        //약관 종류별로 정책비교
+        for(int i=0; i<terms.length; i++){
+        //약관 종류와 날짜 분류
+            String[] divCM = terms[i].split(" ");  
+            String category = divCM[0];
+            int month = Integer.parseInt(divCM[1]);
+    
+            for(int k =0; k<privacies.length; k++){
+                String[] divMC = privacies[k].split(" ");
+                String validCategory= divMC[1];
+                String validMonth= divMC[0];
+                if(validCategory.equals(category)){
+                    //날짜 하나씩 나눠서 진행해야할 듯
+                   String[] divDate = validMonth.split("\\.");
+                    int vY = Integer.parseInt(divDate[0]);
+                    int vM = Integer.parseInt(divDate[1]);
+                    int vD = Integer.parseInt(divDate[2]);
+                    
+                    //약관 기간이 20이면 2년 이상이 지날 수 있음
+                    if(vM+month>12){
+                        vY=vY+(vM+month)/12;
+                        vM=(vM+month)%12;
+                    }else vM+=month;
+                    
+                    if(vD-1<=0){
+                        vD=28;
+                        if(vM-1<=0){
+                            vM=12;
+                            vY-=1;
+                        }else vM-=1;
+                    }else vD-=1;
+                    
+                    int validTotalDay=vY*12*28+vM*28+vD;
+                    if(totalDay>validTotalDay){
+                        li.add(k+1);
+                    }
+                    //vd가 d보다 작아야 list에 추가를 한다.
+                }
+            }
+        }
+        Collections.sort(li);
+        int[] answer = new int[li.size()];
+        for(int i=0; i<answer.length; i++){
+            answer[i] = li.get(i);
+        }
+        return answer;
+    }
+}
