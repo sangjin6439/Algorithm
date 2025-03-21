@@ -1,3 +1,37 @@
+우선순위 큐를 사용하여 더 간단하게 풀었다.
+큐의 우선순위를 매기고 location(찾고 싶은 번호)를 비교해 감
+import java.util.*;
+
+class Solution {
+    public int solution(int[] priorities, int location) {
+        int answer = 0;
+        
+        PriorityQueue<Integer> q = new PriorityQueue<>(Collections.reverseOrder());
+        for(int x: priorities){
+            q.add(x);
+        }
+        
+        while(!q.isEmpty()){
+            
+            for(int i =0; i < priorities.length; i++){
+                //우선순위가 가장 높은 값의  priorities배열 인덱스 번호 알아내기
+                if(q.peek()==priorities[i]){
+                    //q에서 빠져나감 +1
+                    answer++;
+                //우선순위가 가장 높은 큐의 priorities배열 인덱스 번호가 location의 번호와 일치하는 지 확인 -> 중복도 여기서 판별가능    
+                    if(i==location){
+                        return answer;
+                    }
+                    q.poll();
+                }
+            }
+        }return answer;
+        
+    }
+        
+}
+
+
 이런 유형의 문제를 풀었던 기억이 있다.
 map과 q를 사용하여 map에서는 중요도를 나타내고 q에서는 순서대로 값들을 비교한다.
 isPr 부분에서 map의 비교 부분을 실수해서 시간이 더 걸렸다.
