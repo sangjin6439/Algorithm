@@ -1,0 +1,45 @@
+이런 유형의 문제를 풀었던 기억이 있다.
+map과 q를 사용하여 map에서는 중요도를 나타내고 q에서는 순서대로 값들을 비교한다.
+isPr 부분에서 map의 비교 부분을 실수해서 시간이 더 걸렸다.
+
+import java.util.*;
+
+class Solution {
+    public int solution(int[] priorities, int location) {
+        int answer = 1;
+        Map<Integer,Integer> m = new HashMap<>();
+        Queue<Integer> q = new LinkedList<>();
+        
+        for(int i=0; i<priorities.length; i++){
+            m.put(i,priorities[i]);
+            q.offer(i);
+        }
+        
+        while(true){
+            if(isPr(m, q.peek())){
+                if(q.peek()==location){
+                    break;
+                }else {
+                int num = q.poll();
+                m.remove(num);      
+                }
+                answer++;
+            }else {
+                int num = q.remove();
+                q.offer(num);
+            }
+        }
+        
+        return answer;
+    }
+    
+    boolean isPr(Map<Integer,Integer> m, int firstQ){
+      //처음에 i~m.size()까지 했지만 q가 poll()됨에 따라 m의 값이 삭제되는 것을 간과했다. forEach문으로 변경을 하고 m.value()의 값만 비교
+        for(int x :m.values()){
+            if(x>m.get(firstQ)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
