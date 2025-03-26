@@ -1,0 +1,54 @@
+import java.util.*;
+
+class Solution {
+    public String[] solution(String[] orders, int[] course) {
+    
+        List<String> answer = new ArrayList<>();
+        //course의 길이 별로 반복문 돌리기
+        for (int courseSize : course) {
+            Map<String, Integer> countMap = new HashMap<>();
+            int maxCount = 0;
+
+            for (String order : orders) {
+                char[] chars = order.toCharArray();
+                Arrays.sort(chars); // 조합 비교를 위해 정렬
+
+                // 조합 생성
+                makeCombinations(countMap, chars, new StringBuilder(), 0, courseSize);
+            }
+
+            // 가장 많이 주문된 조합 찾기
+            for (String key : countMap.keySet()) {
+                int count = countMap.get(key);
+                if (count < 2) continue; // 최소 2명 이상 주문한 조합만
+                maxCount = Math.max(maxCount, count);
+            }
+
+            // 최대 주문 수와 같은 조합들만 결과에 추가
+            for (String key : countMap.keySet()) {
+                if (countMap.get(key) == maxCount && maxCount >= 2) {
+                    answer.add(key);
+                }
+            }
+        }
+
+        // 사전순 정렬
+        Collections.sort(answer);
+        return answer.toArray(new String[0]);
+    }
+
+    // 조합 만드는 함수 (백트래킹)
+    private void makeCombinations(Map<String, Integer> map, char[] order, StringBuilder comb, int start, int targetLen) {
+        if (comb.length() == targetLen) {
+            String key = comb.toString();
+            map.put(key, map.getOrDefault(key, 0) + 1);
+            return;
+        }
+
+        for (int i = start; i < order.length; i++) {
+            comb.append(order[i]);
+            makeCombinations(map, order, comb, i + 1, targetLen);
+            comb.deleteCharAt(comb.length() - 1); // 백트래킹
+        }
+    }
+}
