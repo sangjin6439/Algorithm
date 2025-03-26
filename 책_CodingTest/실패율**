@@ -1,6 +1,6 @@
 문제 풀이 시간 60 : 실제 풀이 :50분 가량
 도움없이 못 풀었음 -> 내림차순으로 정렬하는게 어려웠음. Comparator.comparingDouble().reversed()사용법 몰랐음.
-Arrays.sort(T[] a, Comparator<? super T> c) 이부분도 확실히 하기
+Arrays.sort(T[] a, Comparator<? super T> c) 이부분도 확실히
 
 '''
 import java.util.*;
