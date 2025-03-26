@@ -1,0 +1,25 @@
+import java.util.*;
+
+class Solution {
+    public String solution(int[] numbers) {
+        //문자열 비교를 위해 배열 생성
+        String[] arr = new String[numbers.length];
+        
+        for(int i=0; i<arr.length; i++){
+            arr[i]=String.valueOf(numbers[i]);
+        }
+        //문자열 형태에서 값을 더했을 시 앞의 숫자가 클 수록 큰 숫자가 됨 -> 큰 숫자 비교하기
+        Arrays.sort(arr,(o1,o2)->(o2+o1).compareTo(o1+o2));
+        //가장 큰 수가 0일 시 0을 return;
+        if (arr[0].equals("0")) {
+           return "0";
+        }
+        StringBuilder answer= new StringBuilder();
+        
+        for(String x: arr){
+            answer.append(x);
+        }
+        
+        return answer.toString();
+    }
+}
