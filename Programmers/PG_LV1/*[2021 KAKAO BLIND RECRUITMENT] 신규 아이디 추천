@@ -1,0 +1,72 @@
+처음에 코드를 더 난잡하게 적었다. StringBuilder에 대해 알 수 있어서 좋았고 다음에 풀 때는 정규식을 사용해보자
+
+import java.util.*;
+
+class Solution {
+    public String solution(String new_id) {
+        StringBuilder answer = new StringBuilder();
+        String a= "";
+        //1
+        a=new_id.toLowerCase();
+        
+        //2
+        for(char x : a.toCharArray()){
+            if(!Character.isAlphabetic(x)&&!Character.isDigit(x)){
+                if(x=='-'||x=='_'||x=='.'){
+                    answer.append(x);
+                    continue;
+                }
+                
+                continue;
+            }
+            answer.append(x);
+        }
+        a=answer.toString();
+        answer.delete(0,answer.length());
+        
+        //3
+        //이 부분 정규식으로 한 줄로 작성가능
+        boolean lastDigit = false;
+        for(char x: a.toCharArray()){
+            if(x=='.'){
+                if(!lastDigit){
+                answer.append(x);
+                lastDigit = true;
+                }else continue;
+            }else{
+                answer.append(x);
+                lastDigit=false;
+            }
+        }
+        
+        
+        //4
+        if (answer.length() > 0 && answer.charAt(0) == '.') {
+            answer.deleteCharAt(0);
+        }
+        if (answer.length() > 0 && answer.charAt(answer.length() - 1) == '.') {
+            answer.deleteCharAt(answer.length() - 1);
+        }
+        
+        //5
+        
+        if(answer.length()==0){
+            answer.append('a');
+        }
+        
+        //6
+        if (answer.length() >= 16) {
+            answer.setLength(15); 
+            if (answer.charAt(answer.length() - 1) == '.') { 
+                 answer.deleteCharAt(answer.length() - 1); 
+            }
+        }
+
+        //7
+        while(answer.length()<3){
+            answer.append(answer.charAt(answer.length()-1));
+        }
+        
+        return answer.toString();
+    }
+}
