@@ -70,3 +70,43 @@ class Solution {
         return answer.toString();
     }
 }
+
+정규식을 사용함
+import java.util.*;
+
+class Solution {
+    public String solution(String new_id) {
+        
+        String a= "";
+        
+        //1
+        a=new_id.toLowerCase();
+        
+        //2
+        a = a.replaceAll("[^0-9a-z_.-]","");
+        
+        //3
+        a = a.replaceAll("[.]{2,}",".");
+
+        //4
+        a=a.replaceAll("^[.]|[.]$","");
+        
+        //5
+        if(a.isEmpty()){
+            a="a";
+        }
+         
+        //6
+        if (a.length() >= 16) {
+            a=a.substring(0,15).replaceAll("[.]$","");
+        }
+
+        //7
+        StringBuilder answer = new StringBuilder(a);
+        while(answer.length()<3){
+            answer.append(answer.charAt(answer.length()-1));
+        }
+        
+        return answer.toString();
+    }
+}
