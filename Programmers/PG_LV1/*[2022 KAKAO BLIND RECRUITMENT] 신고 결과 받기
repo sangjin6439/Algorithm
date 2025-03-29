@@ -1,0 +1,37 @@
+찾고자 하는 값이 몇 번째 배열의 인덱스에 있는 지 알기 위해서 for문을 돌리지 말고 리스트에 있는 메서드인 indexOf()를 사용하여 찾기
+문제에서 요구하는 조건들을 구현할 때 기존에 있는 ex)인덱스 번호 찾기, 중복 제거, 정규식 등을 이용해야 훨씬 사용하기 쉬움
+
+import java.util.*;
+class Solution {
+    public int[] solution(String[] id_list, String[] report, int k) {
+        
+        int[] answer = new int[id_list.length];
+        
+        //중복 제거 Stream.distinct사용 or set으로 변경 후 전환
+        report = Arrays.stream(report).distinct().toArray(String[]::new);
+        //신고 당한 유저와 신고 당한 수
+        Map<String,Integer> m = new HashMap<>();
+        
+        for(String x : report){
+            String[] str = x.split(" ");
+            String banUser = str[1];
+
+            m.put(banUser,m.getOrDefault(banUser,0)+1);
+            }
+        
+        //이거 map으로 하면 누가 누구를 신고했는 지 몰라서 삼중 for문으로 해야함
+      for(String x : report){
+          String[] rep = x.split(" ");
+          String reporter = rep[0];
+          String reported = rep[1];
+          
+          if(m.get(reported)>=k){
+              //여기서 list의 indexOf메서드를 사용해서 몇 번째 인덱스에 존재하는 지 확인해야함
+              int i= Arrays.asList(id_list).indexOf(reporter);
+              answer[i]++;
+          }
+      }
+        
+        return answer;
+    }
+}
