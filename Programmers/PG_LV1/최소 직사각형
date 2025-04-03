@@ -1,0 +1,17 @@
+class Solution {
+    public int solution(int[][] sizes) {
+       //제일 큰 수부터 찾고 큰 수 가 커버 가능한 수 말고 다른 수를 찾으면 될 거 같음. -> size의 각각의 값들에서 큰 수들과 작은 수들끼리 큰 값을 구하면 됨
+       
+        int a1 = 0;
+        int a2 = 0;
+        
+        for(int i=0; i<sizes.length; i++){
+            int c1 = Math.max(sizes[i][0],sizes[i][1]);
+            int c2 = Math.min(sizes[i][0],sizes[i][1]);
+           
+            a1=Math.max(a1,c1);
+            a2=Math.max(a2,c2);
+        }
+        return a1*a2;
+    }
+}
