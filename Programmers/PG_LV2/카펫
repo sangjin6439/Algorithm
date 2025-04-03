@@ -1,0 +1,24 @@
+class Solution {
+    public int[] solution(int brown, int yellow) {
+        int[] answer = new int[2];
+        
+        int add = brown+yellow;
+        
+        for(int i=1; i<=Math.max(brown,yellow); i++){
+            if(add%i==0){
+                int h1 = i;
+                int h2 = add/i;
+                int a = Math.max(h1,h2);
+                int b = Math.min(h1,h2);
+                if (add - (2*a + 2*b) + 4 == yellow)
+{
+                    answer[0]=a;
+                    answer[1]=b;
+                    return answer;
+                }
+            }
+        }
+        
+        return answer;
+    }
+}
