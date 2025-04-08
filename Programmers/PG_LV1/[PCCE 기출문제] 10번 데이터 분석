@@ -1,0 +1,22 @@
+import java.util.*;
+
+class Solution {
+    public int[][] solution(int[][] data, String ext, int val_ext, String sort_by) {
+       
+        List<int[]> liArr=new ArrayList<>();
+        List<String> li = List.of("code","date","maximum","remain");
+        
+        int val = li.indexOf(ext);
+        int sort = li.indexOf(sort_by);
+        
+        for(int i=0; i<data.length; i++){
+            if(data[i][val]<val_ext){
+                liArr.add(data[i]);
+            }
+        }
+        
+        liArr.sort(Comparator.comparing(x->x[sort]));
+        
+        return liArr.toArray(int[][]::new);
+    }
+}
