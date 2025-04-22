@@ -1,0 +1,14 @@
+유클리드 호제법 사용 + int에서 long으로 캐스팅
+class Solution {
+    public long solution(int w, int h) {
+        long W=w;
+        long H=h;
+        long answer = W*H - (W+H-gcd(w,h));
+        return answer;
+    }
+    
+    private long gcd(long a, long b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+  }
+}
