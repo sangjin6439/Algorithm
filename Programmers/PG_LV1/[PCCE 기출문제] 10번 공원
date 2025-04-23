@@ -1,0 +1,36 @@
+class Solution {
+    public int solution(int[] mats, String[][] park) {
+        int answer = -1;
+        for(int i=0; i<mats.length;i++){
+            int r = validM(mats[i],park);
+            if(r!=-1){
+                answer=Math.max(r,answer);
+            }
+        }
+        return answer;
+    }
+    
+    private int validM(int m, String[][] park){
+        for(int i=0; i<park.length; i++){
+            for(int j =0; j<park[i].length; j++){
+                if(park[i][j].equals("-1")){
+                    int count =0;
+                        for(int a=i; a<i+m;a++){
+                            for(int b =j; b<j+m;b++){
+                                if(a<park.length&&b<park[0].length&&park[a][b].equals("-1")){
+                                    count++;
+                                }else break;
+                            }
+                        }
+                    if(count ==m*m){
+                        return m;
+                    }
+                    
+                }
+            }
+         
+        }
+        return -1;
+       
+    }
+}
