@@ -1,0 +1,25 @@
+class Solution {
+    static int answer = -1;
+    public int solution(int k, int[][] dungeons) {
+        //어떻게 순서대로 안하고 순서를 뒤집어서 1 -> 3 ->2로 할까?
+        
+        int[] visit = new int[dungeons.length];// 이걸로 탐험을 했는지 안했는 지 확인해야한다.
+        dfs(k,dungeons,visit,0,0);
+        return answer;
+    }
+    
+    private void dfs(int k, int[][] dungeons,int[] visit ,int clear, int depth){
+        if(depth==dungeons.length){
+            answer=Math.max(clear,answer);
+        }
+        for(int i=0; i<dungeons.length; i++){
+            if(visit[i]==0){
+                visit[i]=1;
+                if(k>=dungeons[i][0]){
+                    dfs(k-dungeons[i][1],dungeons,visit,clear+1,depth+1);
+                }else dfs(k,dungeons,visit,clear,depth+1);
+                visit[i]=0;
+            }   
+        }
+    }
+}
