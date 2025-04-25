@@ -1,0 +1,98 @@
+첫 시도 -> 트리 구조(연결되어 있는 구조)를 생각 안하고 왼쪽 오른쪽으로 숫자만 visit로 나누기 시작함 
+class Solution {
+    public int solution(int n, int[][] wires) {
+        int answer = 100;
+        
+        for(int i=0; i<wires.length; i++){
+            int[] visit= new int[n+1];
+            int l=0;
+            int r=1;
+            for(int k=0; k<wires.length; k++){
+                if(k<=i){
+                    if(visit[wires[k][0]]==0){
+                        visit[wires[k][0]]=1;
+                        l++;
+                    }
+                    if(visit[wires[k][1]]==0){
+                        visit[wires[k][1]]=1;
+                        l++;
+                    }
+                }else{
+                    if(visit[wires[k][0]]==0){
+                        visit[wires[k][0]]=1;
+                        r++;
+                    }
+                    if(visit[wires[k][1]]==0){
+                        visit[wires[k][1]]=1;
+                        r++;
+                    }
+                }
+            }
+            answer=Math.min(answer,Math.abs(r-l));
+        }
+        return answer;
+    }
+}
+
+class Solution {
+    public int[] parent;
+    
+    public void init(int n) {
+        for(int i = 1; i <= n; i++) {
+            parent[i] = i;
+        }
+    }
+    
+    public int findParent(int n) {
+        if (parent[n] != n) {
+            parent[n] = findParent(parent[n]);
+        }
+        return parent[n];
+    }
+    
+    public void union(int a, int b) {
+        a = findParent(a);
+        b = findParent(b);
+        
+        if (a < b) {
+            parent[b] = a;
+        } else {
+            parent[a] = b;
+        }
+    }
+    Union-Find 방식을 사용한 답
+    public int solution(int n, int[][] wires) {
+        int answer = Integer.MAX_VALUE;
+        int len = wires.length;
+        for(int i = 0; i < len; i++) {
+            // i는 끊는
+            parent = new int[n+1];
+            init(n);
+            
+            for(int j = 0; j < len; j++) {
+                if(i == j) {
+                    continue;
+                }
+                if(findParent(wires[j][0]) != findParent(wires[j][1])) {
+                    union(wires[j][0], wires[j][1]);
+                }
+            }
+            
+            // 각 송전탑의 최상위 부모 노드 갱신 및 개수 세기
+            Map<Integer, Integer> connect = new HashMap<>();
+            for (int j = 1; j <= n; j++) {
+                int root = findParent(j);
+                connect.put(root, connect.getOrDefault(root, 0) + 1);
+            }
+            
+            // 두 개의 그룹으로 나뉘었는지 확인하고 차이 계산
+            if (connect.size() == 2) {
+                List<Integer> counts = new ArrayList<>(connect.values());
+                int diff = Math.abs(counts.get(0) - counts.get(1));
+                answer = Math.min(answer, diff);
+            }
+            
+        }
+        return answer;
+    }
+}
