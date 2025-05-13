@@ -1,0 +1,30 @@
+class Solution {
+    String[] arr = {"A","E","I","O","U"};
+    StringBuilder s = new StringBuilder();
+    String w;
+    int answer = 0;
+    public int solution(String word) {
+        //완전 탐색 -> DFS 인데 이걸 어떻게 두고 풀면 좋을까 조건을 적으면 일단 A~U를 for문으로 돌리고 dfs로
+        
+        w=word;
+        dfs(0);
+        
+        return answer;
+    }
+    void dfs(int depth){ 
+        //int로하면 return할때 아무런 의미 없는 값이 리턴됨-> return 즉 백트래킹 어려움
+        if(s.toString().equals(w)){
+            return;
+        }
+        if(s.length()==5){
+            return;
+        }
+        for(int i=0; i<5; i++){
+            s=s.append(arr[i]);
+            answer++;
+            dfs(depth+1);
+            if(s.toString().equals(w)) return;
+            s=s.deleteCharAt(s.length()-1);
+        }
+    }
+}
