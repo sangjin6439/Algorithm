@@ -1,0 +1,4 @@
+select id,	EMAIL,	FIRST_NAME,	LAST_NAME
+from developers d
+where d.skill_code &(select sum(s.code) from SKILLCODES s  where s.category = 'Front End')
+order by id asc
