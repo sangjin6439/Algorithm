@@ -1,0 +1,22 @@
+import java.util.*;
+class Solution {
+    Set<Integer> s = new HashSet<>();    
+    public int[] solution(int[] numbers) {
+        npr(numbers);
+        int[] answer = new int[s.size()];
+        int p=0;
+        for(int i: s){
+            answer[p]=i;
+            p++;
+        }
+        Arrays.sort(answer);
+        return answer;
+    }
+    public void npr(int[] numbers){
+        for(int i=0; i<numbers.length-1; i++){
+            for(int j=i+1; j<numbers.length; j++){
+                s.add(numbers[i]+numbers[j]);
+            }
+        }
+    }
+}
