@@ -1,0 +1,26 @@
+class Solution {
+    public long solution(int n, int[] times) {
+        // 시간범위 지정
+        long start = 0; //시작시간
+        long end = (long)times[times.length-1]*n; //최대 시간 = 사람 수 * 최대 심사 시간
+        
+        //이진 탐색 시작
+        while(end>start){
+            long mid = (start + end) / 2; //중간값 설정
+            
+            if(isValidCheck(times,mid,n)){ //시간 내 유효하면
+                end = mid;// 최대종료 시간 갱신
+            }else{ //시간 내 유효하지 못하면
+                start = mid+1; //최대 시작시간 갱신
+            }
+        }
+        return start;
+    }
+    private boolean isValidCheck(int[] times, long mid, int n){
+        long count = 0;
+        for(int time : times){ // mid내에 심사할 수 있는 최대 사람 수 구하기
+            count += mid/time;
+        }
+        return count >= n;
+    }
+}
