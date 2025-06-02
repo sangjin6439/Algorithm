@@ -1,0 +1,63 @@
+package org.jpa;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main {
+    static int len; // 체스판 길이 변화
+
+    // 나이트의 8가지 움직임 궤적
+    static int[] dx = {-2, -2, -1, -1, 1, 1, 2, 2};
+    static int[] dy = {-1, 1, -2, 2, -2, 2, -1, 1};
+    static boolean[][] visit; //방문 표시
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+
+        for (int i = 0; i < num; i++) { //현재 위치와 목표 위치를 p,g로 설정
+            len = sc.nextInt();
+            int p1 = sc.nextInt();
+            int p2 = sc.nextInt();
+            int g1 = sc.nextInt();
+            int g2 = sc.nextInt();
+
+            visit = new boolean[len][len]; //방문 배열 초기화
+            System.out.println(bfs(p1, p2, g1, g2));
+        }
+    }
+
+    private static int bfs(int p1, int p2, int g1, int g2) {
+        //bfs를 위해 Queue 생성
+        Queue<int[]> q = new LinkedList<>();
+
+        //현재 위치 저장
+        q.offer(new int[]{p1, p2, 0});
+        //현재 위치 방문 처리
+        visit[p1][p2] = true;
+
+        //큐가 비워질 때까지 진행
+        while (!q.isEmpty()) {
+            int[] current = q.poll();
+            int x = current[0];
+            int y = current[1];
+            int m = current[2]; //이동한 횟수
+            // 목표 위치에 도달하면 멈추기
+            if (x == g1 && y == g2) {
+                return m;
+            }
+            //8 방향 모두 확인
+            for (int i = 0; i < 8; i++) {
+                int n1 = x + dx[i];
+                int n2 = y + dy[i];
+                //체스판 안에 움직이는 위치가 있는 지 확인, 방문했는 지 확인
+                if (n1 >= 0 && n1 < len && n2 >= 0 && n2 < len && !visit[n1][n2]) {
+                    visit[n1][n2] = true; //방문 처리
+                    q.offer(new int[]{n1, n2, m + 1}); // 다음 방문 위치 추가
+                }
+            }
+        }
+        return -1;
+    }
+}
