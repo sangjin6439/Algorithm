@@ -1,0 +1,60 @@
+import java.util.*;
+
+class Solution {
+    //인접한 리스트 - 그래프 
+    // 각 리스트에 {도착 마을 번호, 걸린 시간} 저장
+    static ArrayList<int[]>[] edges;
+    
+    public int solution(int N, int[][] road, int K) {
+        int answer =0;
+        edges = new ArrayList[N+1];
+        for(int i=1; i<=N; i++){
+            edges[i] = new ArrayList<>();
+        }
+        
+        //그래프 구성
+        for(int[] r:road){
+            int u = r[0]; // 출발 노드
+            int v = r[1]; // 도착 노드
+            int time = r[2]; // 걸린 시간
+            edges[u].add(new int[]{v, time}); // 양뱡향으로 설정
+            edges[v].add(new int[]{u, time}); // 양방향으로 설정
+        }
+        
+        // 최단 거리 배열 생성
+        int[] dist = new int[N+1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[1] = 0; // 1번 노드 자기 자신 거리 = 0
+        
+        // 우선순위 큐 초기화
+        // 큐({마을번호, 거리})
+    PriorityQueue<int[]> q = new PriorityQueue<>((a,b)-> a[1]-b[1]);
+        q.add(new int[] {1,0});
+        
+        while(q.size()>0){
+            int[] u = q.poll();
+            int node = u[0], distance = u[1];
+            
+            // 현재 꺼낸 거리가 최단 거리보다 크고 이미 찾은 경로가 더 짧으면 스킵
+            if( distance > dist[node] ) continue;
+            
+            //현제 노드와 연결된 노드 탐색
+            for(int[] neighbor : edges[node]){
+                int nNode = neighbor[0];
+                int time = neighbor[1];
+                
+                if(dist[node] + time <dist[nNode]){
+                    dist[nNode] = dist[node] + time;
+                    q.add(new int[]{nNode, dist[nNode]});
+                }
+            }    
+        }
+        //K시간 이내에 배달 가능한 마을 수
+        for(int i=1; i<=N; i++){
+            if(dist[i]<=K){
+                answer++;
+            }
+        }
+        return answer;
+    }
+}
